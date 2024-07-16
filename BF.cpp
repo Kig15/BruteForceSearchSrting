@@ -28,9 +28,24 @@ int comparison(char data[],char pattern[],int datanum,int patnum) {
 	
 }//実際にデータから力任せ法で検索する関数
 
-void showresultpoint() {
+void showresultpoint(char data[],int datanum,int putnum,int resultnum) {
+	int i =0;
+	for ( i = 0; i < resultnum; i++) {
+		printf("%c", data[i]);
+	}
+	printf("\x1b[43m");
+	for (int j = 0; j < putnum; j++) {
+		printf("%c", data[i]);
+		i++;
+	}
+	printf("\x1b[49m");
+	for (int k = i; k < datanum; k++) {
+		printf("%c", data[k]);
+	}
+	printf("\n");
+}//検索結果を表示する関数
 
-}
+
 
 int main(int argc, char* argv[])
 {
@@ -53,7 +68,15 @@ int main(int argc, char* argv[])
 	}//データの文字数が多すぎたら突っぱねる
 
 	resultnum = comparison(argv[1], argv[2], datanum, putnum);//検索実行
-	printf("探索対象の文字列:%s\n", argv[1]);//入力されたデータを表示
+
+	if(resultnum >= 0){
+		printf("探索対象の文字列:");//入力されたデータを表示
+		showresultpoint(argv[1], datanum, putnum, resultnum);
+	}
+	else{
+		printf("探索対象の文字列:%s\n", argv[1]);
+	}
+	
 	printf("検索したい文字列:%s\n", argv[2]);//入力されたパターンを表示
 	if (resultnum >= 0) {
 		printf("検索結果:%d番目に存在\n", resultnum);
